@@ -1,0 +1,239 @@
+/* 
+   Premium Design System v2.0 
+   Theme: Midnight Glass (High-Readability & Modern)
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap');
+
+:root, [data-bs-theme="dark"] {
+    /* Color Palette - Vibrant Electric Aurora */
+    --primary: #8b5cf6;
+    /* Vivid Violet */
+    --primary-hover: #7c3aed;
+    --secondary: #06b6d4;
+    /* Bright Cyan */
+    --accent: #f43f5e;
+    /* Rose */
+
+    --bg-deep: #2a2185;
+    /* Brighter, more saturated Deep Blue */
+    --bg-surface: #3b31aa;
+    --text-main: #ffffff;
+    --text-muted: #cbd5e1;
+
+    --glass-bg: rgba(255, 255, 255, 0.07);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.4);
+
+    --primary-gradient: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+    --surface-gradient: radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.3) 0, transparent 60%),
+        radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.3) 0, transparent 60%),
+        linear-gradient(180deg, #2a2185 0%, #1e1b4b 100%);
+}
+
+[data-bs-theme="light"] {
+    --bg-deep: #f8fafc;
+    --bg-surface: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+    --surface-gradient: radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.1) 0, transparent 60%),
+        radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.1) 0, transparent 60%),
+        linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+/* Ensure text-white inside glass-cards adapts to light mode (except explicitly white text like Hero banners) */
+[data-bs-theme="light"] .glass-card .text-white:not(.display-5) {
+    color: var(--text-main) !important;
+}
+[data-bs-theme="light"] .glass-card .text-white-50:not(.lead) {
+    color: var(--text-muted) !important;
+}
+
+/* Banner Area specifics - always keep white text because banner has dark overlay */
+/* Increased specificity to override glass-card light mode defaults */
+[data-bs-theme="light"] .glass-card .banner-area .text-white, 
+[data-bs-theme="light"] .glass-card .banner-area h4,
+[data-bs-theme="light"] .glass-card .banner-area h5,
+.banner-area .text-white, 
+.banner-area h1, .banner-area h2, .banner-area h3, .banner-area h4, .banner-area h5 {
+    color: #ffffff !important;
+}
+[data-bs-theme="light"] .glass-card .banner-area .text-white-50,
+.banner-area .text-white-50 {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Base Styles & Readability */
+body {
+    background: var(--bg-deep) var(--surface-gradient) fixed;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+}
+
+h1,
+h2,
+h3,
+h4,
+.card-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+}
+
+/* Glassmorphism Evolution */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.glass-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+}
+
+/* Typography & Layout Refinements */
+.lead {
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.text-premium-gradient {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Sidebar Styling - Modern & Clean */
+[data-lte-toggle="sidebar"] i {
+    font-size: 1.2rem;
+}
+
+.app-sidebar {
+    background: rgba(15, 23, 42, 0.8) !important;
+    backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border);
+}
+
+.nav-link {
+    border-radius: 12px;
+    margin: 4px 12px;
+    padding: 10px 15px !important;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: var(--text-muted) !important;
+}
+
+[data-bs-theme="light"] .app-sidebar .nav-link {
+    color: #cbd5e1 !important;
+}
+
+[data-bs-theme="light"] .app-sidebar .brand-text {
+    color: #ffffff !important;
+}
+
+[data-bs-theme="light"] .app-sidebar .nav-icon {
+    color: #cbd5e1 !important;
+}
+
+.nav-link:hover {
+    background: rgba(99, 102, 241, 0.08) !important;
+    color: var(--primary) !important;
+    transform: translateX(4px);
+}
+
+.nav-link.active {
+    background: var(--primary-gradient) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Premium Buttons */
+.btn-premium {
+    background: var(--primary-gradient);
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 14px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-premium:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.5);
+    color: white;
+}
+
+/* Improved Form Controls */
+.form-control,
+.form-select {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    color: var(--text-main) !important;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+}
+
+/* Fix dropdown options readability in dark mode */
+[data-bs-theme="dark"] .form-select option {
+    background-color: #1e1b4b !important;
+    color: #ffffff !important;
+    padding: 10px;
+}
+
+[data-bs-theme="light"] .form-select option {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    padding: 10px;
+}
+
+.form-select {
+    color: var(--text-main) !important;
+}
+
+/* Custom Scrollbar for Premium Feel */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-surface);
+    border-radius: 10px;
+    border: 2px solid var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
