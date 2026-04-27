@@ -63,17 +63,9 @@ if ($currentPageData) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Club & Society Management</title>
     
-    <script>
-        // Immediately check local storage to prevent "White Flash"
-        const storedTheme = localStorage.getItem('theme');
-        if (storedTheme) {
-            document.documentElement.setAttribute('data-bs-theme', storedTheme);
-        } else {
-            // Default to system preference if no choice made
-            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-bs-theme', systemTheme);
-        }
-    </script>
+    <!-- Antigravity Theme Engine -->
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/theme.css?v=<?= time() ?>" />
+    <script src="<?= BASE_URL ?>assets/js/theme.js"></script>
 
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/bootstrap-icons.css" />

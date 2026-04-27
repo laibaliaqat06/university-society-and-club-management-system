@@ -42,9 +42,9 @@ $debug_info = [
 
         <?php if (empty($pendingEvents)): ?>
             <div class="glass-card p-5 text-center">
-                <i class="bi bi-wallet2 display-1 mb-3 text-white-50"></i>
-                <h3 class="fw-bold text-white">Finance queue clear!</h3>
-                <p class="text-white-50">No pending budget applications to review. (Debug: Role=<?= $_SESSION['role'] ?>)</p>
+                <i class="bi bi-wallet2 display-1 mb-3 text-muted"></i>
+                <h3 class="fw-bold">Finance queue clear!</h3>
+                <p class="text-muted">No pending budget applications to review. (Debug: Role=<?= $_SESSION['role'] ?>)</p>
             </div>
         <?php else: ?>
             <div class="row">
@@ -55,26 +55,26 @@ $debug_info = [
                                 <div class="col-md-9">
                                     <div class="d-flex align-items-center mb-3">
                                         <span class="badge bg-success me-3">Admin Approved</span>
-                                        <span class="text-white-50 small">Society: <?= htmlspecialchars($event['club_name']) ?></span>
+                                        <span class="text-muted small">Society: <?= htmlspecialchars($event['club_name']) ?></span>
                                     </div>
-                                    <h3 class="text-white fw-bold mb-3"><?= htmlspecialchars($event['title']) ?></h3>
+                                    <h3 class="fw-bold mb-3"><?= htmlspecialchars($event['title']) ?></h3>
                                     
                                     <div class="row g-4 mb-4">
                                         <div class="col-md-4">
                                             <div class="p-3 rounded bg-success bg-opacity-10 border border-success border-opacity-25">
                                                 <label class="d-block x-small text-success fw-bold text-uppercase mb-1" style="letter-spacing: 1px;">Requested Budget</label>
-                                                <h4 class="text-white mb-0 fw-bold">$<?= number_format($event['budget_amount'], 2) ?></h4>
+                                                <h4 class="mb-0 fw-bold">$<?= number_format($event['budget_amount'], 2) ?></h4>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="p-3 rounded bg-white bg-opacity-5 border border-white border-opacity-10 h-100">
-                                                <label class="d-block x-small text-white-50 fw-bold text-uppercase mb-1" style="letter-spacing: 1px;">Budget Breakdown</label>
-                                                <p class="text-white small mb-0"><?= nl2br(htmlspecialchars($event['budget_details'] ?? 'No breakdown provided.')) ?></p>
+                                            <div class="p-3 rounded bg-body-tertiary border border-white border-opacity-10 h-100">
+                                                <label class="d-block x-small text-muted fw-bold text-uppercase mb-1" style="letter-spacing: 1px;">Budget Breakdown</label>
+                                                <p class="small mb-0"><?= nl2br(htmlspecialchars($event['budget_details'] ?? 'No breakdown provided.')) ?></p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="d-flex gap-4 text-white-50 small">
+                                    <div class="d-flex gap-4 text-muted small">
                                         <span><i class="bi bi-calendar-event me-2"></i> Event Date: <?= date('M d, Y', strtotime($event['event_date'])) ?></span>
                                         <span><i class="bi bi-geo-alt me-2"></i> <?= htmlspecialchars($event['location']) ?></span>
                                     </div>
@@ -99,11 +99,11 @@ $debug_info = [
                                 <form method="POST" class="modal-content glass-card border-0">
                                     <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
                                     <div class="modal-header border-bottom border-white border-opacity-10">
-                                        <h5 class="modal-title text-white">Deny Budget Request</h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                        <h5 class="modal-title">Deny Budget Request</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <textarea name="rejection_reason" class="form-control bg-dark text-white border-secondary" rows="4" placeholder="Enter reason for budget denial (e.g. Too high, insufficient funds)..." required></textarea>
+                                        <textarea name="rejection_reason" class="form-control" rows="4" placeholder="Enter reason for budget denial (e.g. Too high, insufficient funds)..." required></textarea>
                                     </div>
                                     <div class="modal-footer border-top border-white border-opacity-10">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

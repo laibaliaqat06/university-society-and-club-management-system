@@ -22,8 +22,8 @@ require_once '../includes/header.php';
                     <div class="icon-circle bg-success bg-opacity-10 text-success mb-3 mx-auto" style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-cash-coin fs-3"></i>
                     </div>
-                    <h2 class="fw-bold text-white mb-1">$<?= number_format($pdo->query("SELECT SUM(CASE WHEN type='income' THEN amount ELSE -amount END) FROM finance_records WHERE status='approved'")->fetchColumn() ?? 0, 2) ?></h2>
-                    <p class="text-white-50 x-small text-uppercase fw-bold mb-0">Net Revenue</p>
+                    <h2 class="fw-bold mb-1">$<?= number_format($pdo->query("SELECT SUM(CASE WHEN type='income' THEN amount ELSE -amount END) FROM finance_records WHERE status='approved'")->fetchColumn() ?? 0, 2) ?></h2>
+                    <p class="text-muted x-small text-uppercase fw-bold mb-0">Net Revenue</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -31,8 +31,8 @@ require_once '../includes/header.php';
                     <div class="icon-circle bg-warning bg-opacity-10 text-warning mb-3 mx-auto" style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-clock-history fs-3"></i>
                     </div>
-                    <h2 class="fw-bold text-white mb-1">$<?= number_format($pdo->query("SELECT SUM(amount) FROM finance_records WHERE status='pending'")->fetchColumn() ?? 0, 2) ?></h2>
-                    <p class="text-white-50 x-small text-uppercase fw-bold mb-0">Record Approvals</p>
+                    <h2 class="fw-bold mb-1">$<?= number_format($pdo->query("SELECT SUM(amount) FROM finance_records WHERE status='pending'")->fetchColumn() ?? 0, 2) ?></h2>
+                    <p class="text-muted x-small text-uppercase fw-bold mb-0">Record Approvals</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -40,8 +40,8 @@ require_once '../includes/header.php';
                     <div class="icon-circle bg-primary bg-opacity-10 text-primary mb-3 mx-auto" style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-wallet2 fs-3"></i>
                     </div>
-                    <h2 class="fw-bold text-white mb-1"><?= $pdo->query("SELECT COUNT(*) FROM events WHERE admin_status = 'approved' AND finance_status = 'pending'")->fetchColumn() ?></h2>
-                    <p class="text-white-50 x-small text-uppercase fw-bold mb-2">Event Budgets</p>
+                    <h2 class="fw-bold mb-1"><?= $pdo->query("SELECT COUNT(*) FROM events WHERE admin_status = 'approved' AND finance_status = 'pending'")->fetchColumn() ?></h2>
+                    <p class="text-muted x-small text-uppercase fw-bold mb-2">Event Budgets</p>
                     <a href="approve_events.php" class="btn btn-sm btn-outline-primary rounded-pill px-3">Review Phase 2</a>
                 </div>
             </div>
@@ -50,8 +50,8 @@ require_once '../includes/header.php';
                     <div class="icon-circle bg-info bg-opacity-10 text-info mb-3 mx-auto" style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <i class="bi bi-graph-up-arrow fs-3"></i>
                     </div>
-                    <h2 class="fw-bold text-white mb-1">$<?= number_format($pdo->query("SELECT SUM(amount) FROM finance_records WHERE type='income' AND status='approved'")->fetchColumn() ?? 0, 2) ?></h2>
-                    <p class="text-white-50 x-small text-uppercase fw-bold mb-0">Gross Income</p>
+                    <h2 class="fw-bold mb-1">$<?= number_format($pdo->query("SELECT SUM(amount) FROM finance_records WHERE type='income' AND status='approved'")->fetchColumn() ?? 0, 2) ?></h2>
+                    <p class="text-muted x-small text-uppercase fw-bold mb-0">Gross Income</p>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ require_once '../includes/header.php';
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0" style="background: transparent; color: #fff;">
+                    <table class="table table-hover align-middle mb-0">
             <thead>
                 <tr>
                     <th>ID</th>
