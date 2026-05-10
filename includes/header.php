@@ -1,6 +1,8 @@
 <?php
-require_once __DIR__ . '/../core/session.php';
-require_once __DIR__ . '/../core/Notifications.php';
+require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/Notifications.php';
+require_once __DIR__ . '/Logger.php';
+require_once __DIR__ . '/Messages.php';
 
 $unreadCount = 0;
 $unreadNotifs = [];
@@ -8,7 +10,16 @@ if (isset($_SESSION['user_id'])) {
     $notifObj = new Notifications($pdo);
     $unreadCount = $notifObj->countUnread($_SESSION['user_id']);
     $unreadNotifs = $notifObj->getUnread($_SESSION['user_id'], 5);
-}// 1. Fetch System Settings
+    
+    $msgObj = new Messages($pdo);
+    $unreadMessages = $msgObj->countUnreadGlobal($_SESSION['user_id']);
+}
+
+if (strpos($_SERVER['SCRIPT_NAME'], 'audit_logs.php') !== false) {
+    Logger::log("Viewed Audit Logs", "audit_logs", null, "Super admin accessed the audit trail.");
+}
+
+// 1. Fetch System Settings
 $settings = [];
 $stmt = $pdo->query("SELECT * FROM system_settings");
 while ($row = $stmt->fetch()) {
@@ -72,6 +83,9 @@ if ($currentPageData) {
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/adminlte.min.css" />
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/premium.css?v=<?= time() ?>" />
     
+    <!-- Data Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <style> 
         .app-brand-logo { height: 30px; width: auto; } 
         .user-image { width: 30px; height: 30px; object-fit: cover; }
@@ -92,7 +106,27 @@ if ($currentPageData) {
                     <li class="nav-item d-none d-md-block"> <a href="<?= BASE_URL ?>events" class="nav-link">Events</a> </li>
                 <?php endif; ?>
             </ul>
+            <ul class="navbar-nav mx-auto d-none d-lg-block" style="width: 400px;">
+                <li class="nav-item position-relative">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white bg-opacity-10 border-0 text-white-50 rounded-start-pill ps-3"><i class="bi bi-search"></i></span>
+                        <input type="text" id="global-search" class="form-control bg-white bg-opacity-10 border-0 text-white rounded-end-pill py-2" placeholder="Search Societies, Events, Users..." autocomplete="off">
+                    </div>
+                    <div id="search-results" class="position-absolute w-100 mt-2 glass-card shadow-lg d-none" style="z-index: 1050; max-height: 400px; overflow-y: auto;">
+                        <!-- Results will be injected here -->
+                    </div>
+                </li>
+            </ul>
+
             <ul class="navbar-nav ms-auto">
+                 <li class="nav-item">
+                    <a class="nav-link position-relative" href="<?= BASE_URL ?>modules/messages/index.php">
+                        <i class="bi bi-chat-dots-fill"></i>
+                        <?php if($unreadMessages > 0): ?>
+                            <span class="badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle" style="font-size: 0.6rem;"><?= $unreadMessages ?></span>
+                        <?php endif; ?>
+                    </a>
+                </li>
                  <li class="nav-item">
                     <button class="btn btn-link nav-link" id="theme-toggle" type="button">
                         <i class="bi bi-sun-fill" id="theme-icon"></i>
@@ -113,7 +147,7 @@ if ($currentPageData) {
                             <a href="#" class="dropdown-item text-center text-muted">No new notifications</a>
                         <?php else: ?>
                             <?php foreach($unreadNotifs as $n): ?>
-                                <a href="<?= BASE_URL ?>notifications/read_all.php?id=<?= $n['notif_id'] ?>&redir=1" class="dropdown-item">
+                                <a href="<?= BASE_URL ?>modules/notifications/read_all.php?id=<?= $n['notif_id'] ?>&redir=1" class="dropdown-item">
                                     <div class="d-flex align-items-center">
                                         <div class="flex-shrink-0 me-3">
                                             <i class="bi bi-megaphone-fill text-primary"></i>
@@ -132,7 +166,7 @@ if ($currentPageData) {
                             <?php endforeach; ?>
                         <?php endif; ?>
                         <div class="dropdown-divider"></div>
-                        <a href="<?= BASE_URL ?>notifications/read_all.php" class="dropdown-item dropdown-footer text-center">Mark all as read</a>
+                        <a href="<?= BASE_URL ?>modules/notifications/read_all.php" class="dropdown-item dropdown-footer text-center">Mark all as read</a>
                     </div>
                 </li>
                 <?php endif; ?>
@@ -158,14 +192,14 @@ if ($currentPageData) {
                             </p>
                         </li>
                         <li class="user-footer"> 
-                            <a href="<?= BASE_URL ?>profile.php" class="btn btn-default btn-flat">Profile</a>
-                            <a href="<?= BASE_URL ?>logout.php" class="btn btn-default btn-flat float-end">Sign out</a> 
+                            <a href="<?= BASE_URL ?>modules/profile.php" class="btn btn-default btn-flat">Profile</a>
+                            <a href="<?= BASE_URL ?>modules/logout.php" class="btn btn-default btn-flat float-end">Sign out</a> 
                         </li>
                     </ul>
                 </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <a href="<?= BASE_URL ?>login.php" class="btn btn-premium px-4 rounded-pill ms-2">Login</a>
+                        <a href="<?= BASE_URL ?>modules/login.php" class="btn btn-premium px-4 rounded-pill ms-2">Login</a>
                     </li>
                 <?php endif; ?>
             </ul>

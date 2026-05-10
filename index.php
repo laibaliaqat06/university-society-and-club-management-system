@@ -6,23 +6,23 @@ $role = $_SESSION['role'] ?? 'guest';
 
 switch ($role) {
     case 'super_admin':
-        include 'dashboards/super_admin.php';
+        include 'modules/dashboards/super_admin.php';
         break;
     case 'society_admin': // Note: key in DB is society_admin
-        include 'dashboards/society_head.php';
+        include 'modules/dashboards/society_head.php';
         break;
     case 'event_manager':
-        include 'dashboards/event_manager.php';
+        include 'modules/dashboards/event_manager.php';
         break;
     case 'finance_manager':
-        include 'dashboards/finance_manager.php';
+        include 'modules/dashboards/finance_manager.php';
         break;
     case 'member':
     case 'student': // Legacy role support
-        include 'dashboards/member.php';
+        include 'modules/dashboards/member.php';
         break;
     default:
-        include 'dashboards/guest.php';
+        include 'modules/dashboards/guest.php';
         break;
 }
 
